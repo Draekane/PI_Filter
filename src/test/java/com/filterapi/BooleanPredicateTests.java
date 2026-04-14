@@ -12,7 +12,7 @@ import com.filterapi.models.BooleanPredicate;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the SortingAPI class.
+ * Unit tests for the FilterAPI class.
  */
 public class BooleanPredicateTests {
 

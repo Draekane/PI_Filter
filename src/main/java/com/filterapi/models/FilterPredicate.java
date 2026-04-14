@@ -8,7 +8,7 @@ package com.filterapi.models;
  * Created to limit the types of predicates so that any others couldn't be
  * created without explicitly being added to the permits clause.
  * This allows for better control over the types of predicates used in the
- * sorting API and ensures that only valid predicates are implemented.
+ * filtering API and ensures that only valid predicates are implemented.
  */
 public sealed interface FilterPredicate permits BooleanPredicate, LogicalPredicate, ComparisonPredicate {
     boolean evaluate(Object context);

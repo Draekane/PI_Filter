@@ -2,9 +2,9 @@ package com.filterapi.enums;
 
 /**
  * Enum representing the different types of comparisons that can be performed in
- * the sorting API.
+ * the filter API.
  * Each enum constant corresponds to a specific comparison operation that can be
- * used in the sorting criteria.
+ * used in the filtering criteria.
  */
 public enum Comparisons {
   PRESENT, EQUALS, LESS_THAN, GREATER_THAN, MATCHES_REGEX;

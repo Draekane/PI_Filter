@@ -1,4 +1,4 @@
-# Sorting API
+# Filter API
 
 A simple Maven-based Java project for Filtering User objects created as Map<String, String>. We implemented
 a sealed interface and 3 Record classes based on the interface
@@ -48,7 +48,7 @@ mvn test
 ## Running a Specific Test
 
 ```bash
-mvn test -Dtest=SortingAPITest#testNameHere
+mvn test -Dtest=ComparisonPredicateTests#testNameHere
 ```
 
 ## Cleaning Build Artifacts
