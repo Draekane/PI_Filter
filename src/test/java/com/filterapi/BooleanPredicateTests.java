@@ -3,6 +3,8 @@ package com.filterapi;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -38,6 +40,8 @@ public class BooleanPredicateTests {
     // Create a filter with a BooleanPredicate that always returns true
     Filter filter = new Filter(new BooleanPredicate(input));
 
+    System.out.println(filter.toString());
+
     // Create test users
     ArrayList<Map<String, String>> users = testingUtils.createTestUsers(5);
 
@@ -49,5 +53,44 @@ public class BooleanPredicateTests {
         assertFalse(filter.matches(user), "Expected user to not match the filter");
       }
     }
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+      "true, true",
+      "True, true",
+      "TRUE, true",
+      "false, false",
+      "False, false",
+      "FALSE, false",
+      "T, false",
+      "'', false",
+      "'null', false",
+      "'imaLittleTeapot', false"
+  })
+  @DisplayName("Test BooleanPredictate parseFromString function")
+  public void testBooleanPredicateParseFromString(String input, boolean expected) {
+    Filter filter = new Filter(new BooleanPredicate(input));
+
+    String filterString = filter.toString();
+
+    System.out.println("Original Filter String:\n" + filterString);
+
+    Filter parsedFilter = Filter.parseFromString(filterString);
+
+    // Create test users
+    ArrayList<Map<String, String>> users = testingUtils.createTestUsers(5);
+
+    // Test that all users match the filter
+    for (Map<String, String> user : users) {
+      if (expected) {
+        assertTrue(parsedFilter.matches(user), "Expected user to match the filter");
+      } else {
+        assertFalse(parsedFilter.matches(user), "Expected user to not match the filter");
+      }
+    }
+
+    assertEquals(filterString, parsedFilter.toString(),
+        "Expected the original filter string and the parsed filter string to be the same");
   }
 }

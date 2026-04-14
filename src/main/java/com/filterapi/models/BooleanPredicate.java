@@ -37,4 +37,19 @@ public record BooleanPredicate(String boolValue) implements FilterPredicate {
         '}';
   }
 
+  /**
+   * Created to take the toString representation of a BooleanPredicate and convert
+   * that back into a BooleanPredicate
+   */
+  @Override
+  public FilterPredicate parseFromString(String input) {
+    int startIndex = input.indexOf("'") + 1;
+    int endIndex = input.lastIndexOf("'");
+    if (startIndex == 0 || endIndex == -1) {
+      throw new IllegalArgumentException("Invalid input format for BooleanPredicate: " + input);
+    }
+    return new BooleanPredicate(input.substring(startIndex, endIndex));
+
+  }
+
 }

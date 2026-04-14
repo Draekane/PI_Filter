@@ -90,6 +90,37 @@ public record ComparisonPredicate(Comparisons type, String field, String value) 
         '}';
   }
 
+  @Override
+  public FilterPredicate parseFromString(String input) {
+    // Extract type
+    int typeStart = input.indexOf("type=") + 5;
+    int typeEnd = input.indexOf(",", typeStart);
+    String typeStr = input.substring(typeStart, typeEnd).trim();
+    Comparisons type = Comparisons.fromString(typeStr);
+
+    // Extract field
+    int fieldStart = input.indexOf("field='") + 7;
+    int fieldEnd = input.indexOf("'", fieldStart);
+    String field = input.substring(fieldStart, fieldEnd);
+
+    // Handle null field
+    if ("null".equals(field)) {
+      field = null;
+    }
+
+    // Extract value
+    int valueStart = input.indexOf("value='") + 7;
+    int valueEnd = input.lastIndexOf("'");
+    String value = input.substring(valueStart, valueEnd);
+
+    // Handle null value
+    if ("null".equals(value)) {
+      value = null;
+    }
+
+    return new ComparisonPredicate(type, field, value);
+  }
+
   /**
    * Evaluate the predicate based on the provided user attributes.
    *

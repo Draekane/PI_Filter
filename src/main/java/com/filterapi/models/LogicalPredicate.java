@@ -115,4 +115,64 @@ public record LogicalPredicate(Operators operator, FilterPredicate... predicates
     return sb.toString();
   }
 
+  @Override
+  public FilterPredicate parseFromString(String input) {
+    // Extract operator
+    int operatorStart = input.indexOf("operator=") + 9;
+    int operatorEnd = input.indexOf(",", operatorStart);
+    String operatorStr = input.substring(operatorStart, operatorEnd).trim();
+    Operators operator = Operators.valueOf(operatorStr);
+
+    // Extract predicates array content
+    int predicatesStart = input.indexOf("predicates=[") + 12;
+    int predicatesEnd = input.lastIndexOf("]");
+    String predicatesStr = input.substring(predicatesStart, predicatesEnd);
+
+    // Parse individual predicates
+    FilterPredicate[] predicates = parsePredicates(predicatesStr);
+
+    return new LogicalPredicate(operator, predicates);
+  }
+
+  private FilterPredicate[] parsePredicates(String predicatesStr) {
+    java.util.List<FilterPredicate> predicateList = new java.util.ArrayList<>();
+    int depth = 0;
+    int start = 0;
+
+    for (int i = 0; i < predicatesStr.length(); i++) {
+      char c = predicatesStr.charAt(i);
+
+      if (c == '{' || c == '[') {
+        depth++;
+      } else if (c == '}' || c == ']') {
+        depth--;
+      } else if (c == ',' && depth == 0) {
+        // Found a predicate separator
+        String predicateStr = predicatesStr.substring(start, i).trim();
+        if (!predicateStr.isEmpty()) {
+          predicateList.add(parseSinglePredicate(predicateStr));
+        }
+        start = i + 1;
+      }
+    }
+
+    // Add the last predicate
+    String predicateStr = predicatesStr.substring(start).trim();
+    if (!predicateStr.isEmpty()) {
+      predicateList.add(parseSinglePredicate(predicateStr));
+    }
+
+    return predicateList.toArray(new FilterPredicate[0]);
+  }
+
+  private FilterPredicate parseSinglePredicate(String predicateStr) {
+    if (predicateStr.startsWith("LogicalPredicate")) {
+      return new LogicalPredicate("and").parseFromString(predicateStr);
+    } else if (predicateStr.startsWith("BooleanPredicate")) {
+      return new BooleanPredicate("dummy").parseFromString(predicateStr);
+    } else if (predicateStr.startsWith("ComparisonPredicate")) {
+      return new ComparisonPredicate("present").parseFromString(predicateStr);
+    }
+    throw new IllegalArgumentException("Unknown predicate type: " + predicateStr);
+  }
 }

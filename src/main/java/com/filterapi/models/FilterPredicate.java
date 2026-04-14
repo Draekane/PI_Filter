@@ -14,4 +14,6 @@ public sealed interface FilterPredicate permits BooleanPredicate, LogicalPredica
     boolean evaluate(Object context);
 
     String toString();
+
+    FilterPredicate parseFromString(String input);
 }
