@@ -1,10 +1,10 @@
-package com.sortingapi.models;
+package com.filterapi.models;
 
 import java.util.Map;
 
-import com.sortingapi.enums.Comparisons;
-
 import org.apache.commons.lang3.math.NumberUtils;
+
+import com.filterapi.enums.Comparisons;
 
 /**
  * A record representing a comparison predicate for filtering objects based on a

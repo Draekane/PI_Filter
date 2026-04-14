@@ -1,4 +1,4 @@
-package com.sortingapi;
+package com.filterapi;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,8 +6,9 @@ import java.util.Map;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.sortingapi.api.Filter;
-import com.sortingapi.models.BooleanPredicate;
+import com.filterapi.api.Filter;
+import com.filterapi.models.BooleanPredicate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

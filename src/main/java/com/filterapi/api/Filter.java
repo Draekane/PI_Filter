@@ -1,9 +1,9 @@
-package com.sortingapi.api;
+package com.filterapi.api;
 
 import java.util.List;
 import java.util.Map;
 
-import com.sortingapi.models.FilterPredicate;
+import com.filterapi.models.FilterPredicate;
 
 /**
  * API for filtering operations.

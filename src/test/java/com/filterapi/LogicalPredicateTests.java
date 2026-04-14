@@ -1,4 +1,4 @@
-package com.sortingapi;
+package com.filterapi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,10 +7,10 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sortingapi.api.Filter;
-import com.sortingapi.models.BooleanPredicate;
-import com.sortingapi.models.ComparisonPredicate;
-import com.sortingapi.models.LogicalPredicate;
+import com.filterapi.api.Filter;
+import com.filterapi.models.BooleanPredicate;
+import com.filterapi.models.ComparisonPredicate;
+import com.filterapi.models.LogicalPredicate;
 
 /**
  * Tests for the LogicalPredicate class. As there is a lot more to test here,

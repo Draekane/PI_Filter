@@ -1,4 +1,4 @@
-package com.sortingapi.models;
+package com.filterapi.models;
 
 /**
  * A sealed interface representing a filter predicate that can be evaluated

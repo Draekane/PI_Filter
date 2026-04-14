@@ -1,6 +1,6 @@
-package com.sortingapi.models;
+package com.filterapi.models;
 
-import com.sortingapi.enums.Operators;
+import com.filterapi.enums.Operators;
 
 /**
  * A record representing a logical predicate for combining multiple filter

@@ -1,4 +1,4 @@
-package com.sortingapi;
+package com.filterapi;
 
 import java.util.ArrayList;
 import java.util.Arrays;

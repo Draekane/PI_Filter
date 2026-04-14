@@ -1,4 +1,4 @@
-package com.sortingapi.enums;
+package com.filterapi.enums;
 
 /**
  * Enum representing logical operators for filtering criteria.

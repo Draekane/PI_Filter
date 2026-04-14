@@ -1,4 +1,4 @@
-package com.sortingapi.enums;
+package com.filterapi.enums;
 
 /**
  * Enum representing the different types of comparisons that can be performed in

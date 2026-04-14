@@ -1,4 +1,4 @@
-package com.sortingapi.models;
+package com.filterapi.models;
 
 /**
  * A record representing a boolean predicate for filtering objects based on a
