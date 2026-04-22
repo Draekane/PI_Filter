@@ -10,7 +10,8 @@ package com.filterapi.models;
  * This allows for better control over the types of predicates used in the
  * filtering API and ensures that only valid predicates are implemented.
  */
-public sealed interface FilterPredicate permits BooleanPredicate, LogicalPredicate, ComparisonPredicate {
+public sealed interface FilterPredicate
+        permits BooleanPredicate, LogicalPredicate, ComparisonPredicate, SearchPredicate {
     boolean evaluate(Object context);
 
     String toString();
