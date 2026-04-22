@@ -11,6 +11,7 @@ import com.filterapi.api.Filter;
 import com.filterapi.models.BooleanPredicate;
 import com.filterapi.models.ComparisonPredicate;
 import com.filterapi.models.LogicalPredicate;
+import com.filterapi.models.SearchPredicate;
 
 /**
  * Tests for the LogicalPredicate class. As there is a lot more to test here,
@@ -323,6 +324,36 @@ public class LogicalPredicateTests {
   }
 
   @Test
+  @DisplayName("Test LogicalPreicate with single user context - Multi-MultiLevel Logical Predicate with Search - Complexity Test - True")
+  public void testLogicalPredicateSingleUser_MultiMultiLevelLogicalPredicate_v3() {
+    ComparisonPredicate firstPredicate = new ComparisonPredicate("greater_than", "age", "25");
+    ComparisonPredicate secondPredicate = new ComparisonPredicate("less_than", "age", "35");
+    LogicalPredicate andPredicate = new LogicalPredicate("and", firstPredicate, secondPredicate);
+
+    ComparisonPredicate thirdPredicate = new ComparisonPredicate("equals", "role", "User");
+    ComparisonPredicate fourthPredicate = new ComparisonPredicate("matches_regex", "email", ".*@ghosted\\.com");
+    LogicalPredicate orPredicate = new LogicalPredicate("or", thirdPredicate, fourthPredicate);
+
+    LogicalPredicate multiLevelAnd = new LogicalPredicate("and", andPredicate, orPredicate);
+
+    SearchPredicate fifthPredicate = new SearchPredicate("levenshtein", "firstName", "Jimb", 2.0);
+    SearchPredicate sixthPredicate = new SearchPredicate("levenshtein", "lastName", "Litch", 2.0);
+    LogicalPredicate multiLevelOr = new LogicalPredicate("or", fifthPredicate, sixthPredicate);
+
+    LogicalPredicate multiMultiLevelAnd = new LogicalPredicate("and", multiLevelAnd, multiLevelOr);
+
+    ComparisonPredicate seventhPredicate = new ComparisonPredicate("equals", "lastName", "Litcherholt");
+    LogicalPredicate finalPredicate = new LogicalPredicate("and", multiMultiLevelAnd, seventhPredicate);
+
+    Filter filter = new Filter(finalPredicate);
+
+    Map<String, String> user = testingUtils.createTestUser("Jimbob", "Litcherholt", "Admin", "30",
+        "jimbob@ghosted.com");
+
+    assertEquals(true, filter.matches(user), "Expected user to match the filter");
+  }
+
+  @Test
   @DisplayName("Test LogicalPreicate with single user context - ParseFromString Test")
   public void testLogicalPredicateSingleUser_ParseFromString() {
     ComparisonPredicate firstPredicate = new ComparisonPredicate("greater_than", "age", "25");
@@ -358,4 +389,5 @@ public class LogicalPredicateTests {
     assertEquals(filterString, parsedFilter.toString(),
         "Expected the original filter string and the parsed filter string to be the same");
   }
+
 }
